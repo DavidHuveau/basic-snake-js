@@ -1,1 +1,1 @@
-new Snake();
+new Game();

@@ -1,13 +1,35 @@
 const GAME_BOARD_ID = "game-grid";
 
+const SNAKE_CLASS = "snake";
+const FOOD_CLASS = "food";
+
+// Game settings
 const GAME_ROWS_NUMBER = 20;
 const GAME_COLS_NUMBER = 20;
 
-class Snake {
+const CELL_TYPE = Object.freeze({
+  EMPTY: "EMPTY",
+  FOOD: "FOOD",
+  SNAKE: "SNAKE",
+});
+
+const DIRECTION = Object.freeze({
+  NONE: "NONE",
+  LEFT: "LEFT",
+  RIGHT: "RIGHT",
+  UP: "UP",
+  DOWN: "DOWN",
+});
+
+class Game {
   constructor() {
-    this.gameBoard = this.domElement(GAME_BOARD_ID);
+    this.gameBoard = Utilities.domElement(GAME_BOARD_ID);
 
     this.startGame();
+
+    const test = new Board(GAME_ROWS_NUMBER, GAME_COLS_NUMBER);
+    test.placeFood();
+    test.render();
   }
 
   startGame() {
@@ -27,20 +49,7 @@ class Snake {
   generateCell(rowIndex, colIndex) {
     const cell = document.createElement("div");
     cell.className = "cell";
-    cell.id = `${rowIndex}_${colIndex}`;
+    cell.id = `c_${rowIndex}_${colIndex}`;
     this.gameBoard.appendChild(cell);
-  }
-
-  // --------------------------------------------------------
-  // utilities
-  // --------------------------------------------------------
-
-  // eslint-disable-next-line class-methods-use-this
-  domElement(classOrId) {
-    const char = classOrId.charAt(0);
-    if (char !== "." && char !== "#") {
-      classOrId = `#${classOrId}`; // eslint-disable-line no-param-reassign
-    }
-    return document.querySelector(classOrId);
   }
 }
