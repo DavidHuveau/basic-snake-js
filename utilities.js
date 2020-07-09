@@ -10,4 +10,10 @@ class Utilities {
   static randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
+
+  static showMessage(message) {
+    setTimeout(() => {
+      alert(message); // eslint-disable-line no-alert
+    }, 100);
+  }
 }

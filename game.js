@@ -27,9 +27,17 @@ class Game {
 
     this.startGame();
 
-    const test = new Board(GAME_ROWS_NUMBER, GAME_COLS_NUMBER);
-    test.placeFood();
-    test.render();
+    /// ///// test
+    const board = new Board(GAME_ROWS_NUMBER, GAME_COLS_NUMBER);
+    const snake = new Snake(board.cells[1][10], 5, board);
+    board.placeFood();
+    board.render();
+    debugger;
+    snake.move(board.cells[0][10]);
+    board.render();
+    debugger;
+    const res = snake.checkCrash(undefined);
+    if (res) Utilities.showMessage("Game Over");
   }
 
   startGame() {

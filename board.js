@@ -6,8 +6,8 @@ class Board {
     this.initCells();
 
     // render test cells
-    this.cells[0][0].cellType = CELL_TYPE.SNAKE;
-    this.cells[19][19].cellType = CELL_TYPE.FOOD;
+    // this.cells[0][0].cellType = CELL_TYPE.SNAKE;
+    // this.cells[19][19].cellType = CELL_TYPE.FOOD;
   }
 
   initCells() {
@@ -26,6 +26,7 @@ class Board {
   availableCells() {
     const availableCells = [];
 
+    // TODO add browseAllCells(fn) function
     for (let rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
       for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
         if (this.cells[rowIndex][columnIndex].cellType === CELL_TYPE.EMPTY) {
