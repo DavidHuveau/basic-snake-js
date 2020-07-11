@@ -17,6 +17,7 @@ class Game {
     this.board = board;
     this.snake = snake;
 
+    //TODO: move in listenForInpupt ?
     this.directionsQueue = []
     this.currentDirection = DIRECTION.NONE;
     this.gameOver = false;
@@ -37,6 +38,8 @@ class Game {
     this.directionsQueue.push(DIRECTION.DOWN);
     this.update();
     this.board.render();
+
+    new ListenForInput(this);
   }
 
   // Contain the logic needed for the snake and the board to work together
@@ -93,9 +96,9 @@ class Game {
     return this.directionsQueue && this.directionsQueue[0] || this.currentDirection;
   }
 
-  getLastDirection() {
-    return this.directionsQueue && this.directionsQueue[directions.length - 1] || this.currentDirection;
-  }
+  // getLastDirection() {
+  //   return this.directionsQueue && this.directionsQueue[this.directionsQueue.length - 1] || this.currentDirection;
+  // }
 
   // Prevent the player from spamming the arrow keys a huge number of times
   // and building up a list of directions that are no longer relevant

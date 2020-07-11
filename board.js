@@ -29,7 +29,7 @@ class Board {
 
     for (let rowIndex = 0; rowIndex < this.rowsNumber; rowIndex++) {
       for (let columnIndex = 0; columnIndex < this.columnsNumber; columnIndex++) {
-        this.generateCell(rowIndex, columnIndex);
+        this.generateEmptyCell(rowIndex, columnIndex);
       }
     }
   }
@@ -38,7 +38,7 @@ class Board {
     this.cells = Array.from(Array(this.rowsNumber), () => new Array(this.columnsNumber));
   }
 
-  generateCell(rowIndex, columnIndex) {
+  generateEmptyCell(rowIndex, columnIndex) {
     const cell = document.createElement("div");
     cell.className = "cell";
     cell.id = `c_${rowIndex}_${columnIndex}`;
