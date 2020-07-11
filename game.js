@@ -27,19 +27,17 @@ class Game {
   }
 
   startGame() {
-    //////// test
     this.board.placeFood();
-    this.board.render();
-    debugger;
-    this.snake.move(this.board.cells[this.snake.getHead().row - 1][this.snake.getHead().column]);
-    this.board.render();
-    debugger;
-    this.directionsQueue.push(DIRECTION.RIGHT);
-    this.directionsQueue.push(DIRECTION.DOWN);
-    this.update();
     this.board.render();
 
     new ListenForInput(this);
+
+    const self = this;
+    const interval = setInterval(function () {
+      self.update();
+      self.board.render();
+    }, 100)
+
   }
 
   // Contain the logic needed for the snake and the board to work together
@@ -53,7 +51,7 @@ class Game {
         this.gameOver = true;
 
         Utilities.showMessage(`Game Over! You scored is ${this.score} points!`);
-      } else if (this.snake.move(nextCell).cellType === CELL_TYPE.FOOD) {
+      } else if (this.snake.move(nextCell) === CELL_TYPE.FOOD) {
         this.score += 1;
         this.snake.grow();
         this.board.placeFood();
@@ -96,12 +94,7 @@ class Game {
     return this.directionsQueue && this.directionsQueue[0] || this.currentDirection;
   }
 
-  // getLastDirection() {
-  //   return this.directionsQueue && this.directionsQueue[this.directionsQueue.length - 1] || this.currentDirection;
-  // }
-
   // Prevent the player from spamming the arrow keys a huge number of times
-  // and building up a list of directions that are no longer relevant
   exceededMaxDirections() {
     return this.directionsQueue.length > 3;
   }

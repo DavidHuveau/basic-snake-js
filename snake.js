@@ -43,10 +43,6 @@ class Snake {
     this.head.cellType = CELL_TYPE.SNAKE;
     this.snakeParts.unshift(this.head);
 
-    // loops through all of the snakeParts and sets the cell type to SNAKE for each
-    // this.snakeParts.forEach( function(part) {
-    //  part.cellType = CELL_TYPE.SNAKE;
-    // })
     return initilaCellType;
   }
 

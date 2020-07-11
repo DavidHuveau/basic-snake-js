@@ -8,7 +8,6 @@ class ListenForInput {
 		this.game = game;
 		this.firstTime = true;
 
-		debugger
 		this.bindEvent();
 	}
 
@@ -22,7 +21,6 @@ class ListenForInput {
 	}
 
 	changeDirection(event) {
-		debugger
 		if (this.firstTime) {
 			this.game.addDirection(DIRECTION.UP);
 			this.firstTime = false;
@@ -45,13 +43,9 @@ class ListenForInput {
 	// Prevent the player from building up a queue of redundant directions
 	movingVertically() {
 		return [DIRECTION.UP, DIRECTION.DOWN].includes(this.game.getFirstDirection());
-		// return [DIRECTION.UP, DIRECTION.DOWN].includes(this.game.getLastDirection());
-		// return this.game.getLastDirection() !== DIRECTION.RIGHT && this.game.getLastDirection() !== DIRECTION.LEFT;
 	};
 
 	movingHorizontally() {
 		return [DIRECTION.LEFT, DIRECTION.RIGHT].includes(this.game.getFirstDirection());
-		// return [DIRECTION.LEFT, DIRECTION.RIGHT].includes(this.game.getLastDirection());
-		// return this.game.getLastDirection() !== DIRECTION.UP && this.game.getLastDirection() !== DIRECTION.DOWN;
 	};
 }
