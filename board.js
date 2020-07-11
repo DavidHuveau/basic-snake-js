@@ -1,20 +1,49 @@
-class Board {
-  constructor(rowCount, columnCount) {
-    this.rowCount = rowCount;
-    this.columnCount = columnCount;
+const SNAKE_CLASS = "snake";
+const FOOD_CLASS = "food";
 
-    this.initCells();
+class Board {
+  constructor(gameBoardElementId, rowsNumber, columnsNumber) {
+    this.gameBoardElement = Utilities.domElement(gameBoardElementId);
+    this.rowsNumber = rowsNumber;
+    this.columnsNumber = columnsNumber;
+
+    this.generateGrid();
 
     // render test cells
     // this.cells[0][0].cellType = CELL_TYPE.SNAKE;
     // this.cells[19][19].cellType = CELL_TYPE.FOOD;
   }
 
-  initCells() {
-    this.cells = [...Array(this.rowCount)].map((row, rowIndex) => [...Array(this.columnCount)].map(
-      (col, columnIndex) => new Cell(rowIndex, columnIndex, CELL_TYPE.EMPTY),
-    ));
+  generateGrid() {
+    this.gameBoardElement.innerHTML = "";
+
+    this.initCells();
+
+    for (let rowIndex = 0; rowIndex < this.rowsNumber; rowIndex++) {
+      for (let columnIndex = 0; columnIndex < this.columnsNumber; columnIndex++) {
+        this.generateCell(rowIndex, columnIndex);
+      }
+    }
   }
+
+  initCells() {
+    this.cells = Array.from(Array(this.rowsNumber), () => new Array(this.columnsNumber));
+  }
+
+  generateCell(rowIndex, columnIndex) {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    cell.id = `c_${rowIndex}_${columnIndex}`;
+    this.gameBoardElement.appendChild(cell);
+
+    this.cells[rowIndex][columnIndex] = new Cell(rowIndex, columnIndex, CELL_TYPE.EMPTY);
+  }
+
+  // initCells() {
+  //   this.cells = [...Array(this.rowsNumber)].map((row, rowIndex) => [...Array(this.columnsNumber)].map(
+  //     (col, columnIndex) => new Cell(rowIndex, columnIndex, CELL_TYPE.EMPTY),
+  //   ));
+  // }
 
   placeFood() {
     const availableCells = this.availableCells();
@@ -27,8 +56,8 @@ class Board {
     const availableCells = [];
 
     // TODO add browseAllCells(fn) function
-    for (let rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
-      for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
+    for (let rowIndex = 0; rowIndex < this.rowsNumber; rowIndex++) {
+      for (let columnIndex = 0; columnIndex < this.columnsNumber; columnIndex++) {
         if (this.cells[rowIndex][columnIndex].cellType === CELL_TYPE.EMPTY) {
           availableCells.push(this.cells[rowIndex][columnIndex]);
         }
@@ -38,8 +67,8 @@ class Board {
   }
 
   render() {
-    for (let rowIndex = 0; rowIndex < this.rowCount; rowIndex++) {
-      for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
+    for (let rowIndex = 0; rowIndex < this.rowsNumber; rowIndex++) {
+      for (let columnIndex = 0; columnIndex < this.columnsNumber; columnIndex++) {
         const { cellType } = this.cells[rowIndex][columnIndex];
         const cellElement = Utilities.domElement(`c_${rowIndex}_${columnIndex}`);
 
