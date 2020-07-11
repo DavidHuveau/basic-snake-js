@@ -32,7 +32,7 @@ class Snake {
   }
 
   move(nextCell) {
-    // const cellType = nextCell.cellType;
+    const initilaCellType = nextCell.cellType;
 
     // remove the tail of our snake
     const tail = this.snakeParts.pop();
@@ -47,7 +47,7 @@ class Snake {
     // this.snakeParts.forEach( function(part) {
     //  part.cellType = CELL_TYPE.SNAKE;
     // })
-    // return cellType;
+    return initilaCellType;
   }
 
   checkCrash(nextCell) {

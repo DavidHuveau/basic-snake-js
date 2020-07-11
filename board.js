@@ -14,6 +14,14 @@ class Board {
     // this.cells[19][19].cellType = CELL_TYPE.FOOD;
   }
 
+  getRowsNumber() {
+    // TODO use setter
+  }
+
+  getColumnsNumber() {
+    // TODO use setter
+  }
+
   generateGrid() {
     this.gameBoardElement.innerHTML = "";
 
