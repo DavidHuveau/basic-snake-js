@@ -25,16 +25,18 @@ class ListenForInput {
 			this.game.addDirection(DIRECTION.UP);
 			this.firstTime = false;
 		} else if (!this.game.exceededMaxDirections()) {
-			if (event.keyCode == LEFT_ARROW && this.movingVertically()) {
+			const { keyCode } = event;
+			
+			if (keyCode == LEFT_ARROW && this.movingVertically()) {
 				this.game.addDirection(DIRECTION.LEFT);
 			}
-			else if (event.keyCode == RIGHT_ARROW && this.movingVertically()) {
+			else if (keyCode == RIGHT_ARROW && this.movingVertically()) {
 				this.game.addDirection(DIRECTION.RIGHT);
 			}
-			else if (event.keyCode == UP_ARROW && this.movingHorizontally()) {
+			else if (keyCode == UP_ARROW && this.movingHorizontally()) {
 				this.game.addDirection(DIRECTION.UP);
 			}
-			else if (event.keyCode == DOWN_ARROW && this.movingHorizontally()) {
+			else if (keyCode == DOWN_ARROW && this.movingHorizontally()) {
 				this.game.addDirection(DIRECTION.DOWN);
 			}
 		}
@@ -42,10 +44,10 @@ class ListenForInput {
 
 	// Prevent the player from building up a queue of redundant directions
 	movingVertically() {
-		return [DIRECTION.UP, DIRECTION.DOWN].includes(this.game.getFirstDirection());
+		return [DIRECTION.UP, DIRECTION.DOWN].includes(this.game.currentDirection);
 	};
 
 	movingHorizontally() {
-		return [DIRECTION.LEFT, DIRECTION.RIGHT].includes(this.game.getFirstDirection());
+		return [DIRECTION.LEFT, DIRECTION.RIGHT].includes(this.game.currentDirection);
 	};
 }

@@ -3,6 +3,7 @@ class Snake {
     this.headCell = headCell;
     this.startingLength = startingLength;
     this.board = board;
+    this.isGrow = false;
 
     this.initVerticalSnake();
   }
@@ -26,13 +27,18 @@ class Snake {
   }
 
   grow() {
-    this.snakeParts.push(this.headCell);
+    this.isGrow = true;
   }
 
   move(nextCell) {
     const initilaCellType = nextCell.cellType;
 
-    this.removeTail();
+    if (this.isGrow) {
+      this.isGrow = false;
+    } else {
+      this.removeTail();
+    }
+
     this.setHeadToNextCell(nextCell);
 
     return initilaCellType;
