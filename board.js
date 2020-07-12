@@ -47,12 +47,6 @@ class Board {
     this.cells[rowIndex][columnIndex] = new Cell(rowIndex, columnIndex, CELL_TYPE.EMPTY);
   }
 
-  // initCells() {
-  //   this.cells = [...Array(this.rowsNumber)].map((row, rowIndex) => [...Array(this.columnsNumber)].map(
-  //     (col, columnIndex) => new Cell(rowIndex, columnIndex, CELL_TYPE.EMPTY),
-  //   ));
-  // }
-
   placeFood() {
     const availableCells = this.availableCells();
     const cellIndex = Utilities.randomInteger(0, availableCells.length);

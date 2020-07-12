@@ -12,32 +12,33 @@ const DIRECTION = Object.freeze({
   DOWN: "DOWN",
 });
 
+const MAX_DIRECTIONS_IN_QUEUE = 3;
+
 class Game {
   constructor(board, snake) {
     this.board = board;
     this.snake = snake;
 
+    this.startGame();
+  }
+
+  startGame() {
     //TODO: move in listenForInpupt ?
     this.directionsQueue = []
     this.currentDirection = DIRECTION.NONE;
     this.gameOver = false;
     this.score = 0;
 
-    this.startGame();
-  }
-
-  startGame() {
     this.board.placeFood();
     this.board.render();
 
     new ListenForInput(this);
 
     const self = this;
-    const interval = setInterval(function () {
+    setInterval(function () {
       self.update();
       self.board.render();
     }, 100)
-
   }
 
   // Contain the logic needed for the snake and the board to work together
@@ -46,10 +47,7 @@ class Game {
       const nextCell = this.getNextCell();
 
       if (this.snake.checkCrash(nextCell)) {
-        this.directionsQueue = [];
-        this.currentDirection = DIRECTION.NONE;
         this.gameOver = true;
-
         Utilities.showMessage(`Game Over! You scored is ${this.score} points!`);
       } else if (this.snake.move(nextCell) === CELL_TYPE.FOOD) {
         this.score += 1;
@@ -96,6 +94,6 @@ class Game {
 
   // Prevent the player from spamming the arrow keys a huge number of times
   exceededMaxDirections() {
-    return this.directionsQueue.length > 3;
+    return this.directionsQueue.length > MAX_DIRECTIONS_IN_QUEUE;
   }
 }

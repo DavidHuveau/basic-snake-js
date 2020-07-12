@@ -9,6 +9,6 @@ const board = new Board(GAME_BOARD_ID, GAME_ROWS_NUMBER, GAME_COLUMNS_NUMBER);
 
 const startRowIndex = Math.floor(GAME_ROWS_NUMBER / 2);
 const startColumnIndex = Math.floor(GAME_COLUMNS_NUMBER / 2);
-const snake = new Snake(board.cells[startRowIndex][startColumnIndex], SNAKE_STARTING_LENGTH, board);
+const snake = new Snake(board, board.cells[startRowIndex][startColumnIndex], SNAKE_STARTING_LENGTH);
 
 new Game(board, snake);

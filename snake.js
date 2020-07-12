@@ -1,22 +1,20 @@
 class Snake {
-  constructor(cell, startingLength, board) {
-    this.cell = cell;
+  constructor(board, headCell, startingLength) {
+    this.headCell = headCell;
     this.startingLength = startingLength;
     this.board = board;
 
-    this.initSnake();
+    this.initVerticalSnake();
   }
 
-  // Make a vertical snake whose head is closest to the top of the game board
-  initSnake() {
-    this.head = this.cell;
+  initVerticalSnake() {
     this.snakeParts = [];
 
-    this.head.cellType = CELL_TYPE.SNAKE;
-    this.snakeParts.push(this.head);
+    this.headCell.cellType = CELL_TYPE.SNAKE;
+    this.snakeParts.push(this.headCell);
 
     for (let index = 1; index < this.startingLength; index++) {
-      const bodyPart = this.board.cells[this.head.row + index][this.head.column];
+      const bodyPart = this.board.cells[this.headCell.row + index][this.headCell.column];
       bodyPart.cellType = CELL_TYPE.SNAKE;
       this.snakeParts.push(bodyPart);
     }
@@ -24,26 +22,31 @@ class Snake {
 
   getHead() {
     // TODO use setter
-    return this.head;
+    return this.headCell;
   }
 
   grow() {
-    this.snakeParts.push(this.head);
+    this.snakeParts.push(this.headCell);
   }
 
   move(nextCell) {
     const initilaCellType = nextCell.cellType;
 
-    // remove the tail of our snake
-    const tail = this.snakeParts.pop();
-    tail.cellType = CELL_TYPE.EMPTY;
-
-    // set the head of the snake to the cell being moved into
-    this.head = nextCell;
-    this.head.cellType = CELL_TYPE.SNAKE;
-    this.snakeParts.unshift(this.head);
+    this.removeTail();
+    this.setHeadToNextCell(nextCell);
 
     return initilaCellType;
+  }
+
+  removeTail() {
+    const tail = this.snakeParts.pop();
+    tail.cellType = CELL_TYPE.EMPTY;
+  }
+
+  setHeadToNextCell(nextCell) {
+    this.headCell = nextCell;
+    this.headCell.cellType = CELL_TYPE.SNAKE;
+    this.snakeParts.unshift(this.headCell);
   }
 
   checkCrash(nextCell) {
