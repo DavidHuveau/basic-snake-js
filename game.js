@@ -1,3 +1,5 @@
+const GAME_BOARD_ID = "game-grid";
+
 const CELL_TYPE = Object.freeze({
   EMPTY: "EMPTY",
   FOOD: "FOOD",
@@ -14,20 +16,31 @@ const DIRECTION = Object.freeze({
 
 const MAX_DIRECTIONS_IN_QUEUE = 3;
 
-class Game {
-  constructor(board, snake) {
-    this.board = board;
-    this.snake = snake;
+// Game settings
+const GAME_ROWS_NUMBER = 20;
+const GAME_COLUMNS_NUMBER = 20;
+const SNAKE_STARTING_LENGTH = 5;
 
+class Game {
+  constructor() {
+    this.initGame();
     this.startGame();
   }
 
-  startGame() {
+  initGame() {
+    this.board = new Board(GAME_BOARD_ID, GAME_ROWS_NUMBER, GAME_COLUMNS_NUMBER);;
+
+    const startRowIndex = Math.floor(GAME_ROWS_NUMBER / 2);
+    const startColumnIndex = Math.floor(GAME_COLUMNS_NUMBER / 2);
+    this.snake = new Snake(this.board, this.board.cells[startRowIndex][startColumnIndex], SNAKE_STARTING_LENGTH);
+
     this.directionsQueue = []
     this.currentDirection = DIRECTION.NONE;
     this.gameOver = false;
     this.score = 0;
+  }
 
+  startGame() {
     this.board.placeFood();
     this.board.render();
 
@@ -40,6 +53,12 @@ class Game {
     }, 100)
   }
 
+  restartGame() {
+    clearInterval(this.gameTimer);
+    this.initGame();
+    this.startGame();
+  }
+
   // Contain the logic needed for the snake and the board to work together
   update() {
     if (!this.gameOver && this.getFirstDirection() !== DIRECTION.NONE) {
@@ -49,11 +68,7 @@ class Game {
         this.gameOver = true;
         const self = this;
         Utilities.showMessage(`Game Over! You scored is ${this.score} points!`, function () {
-          // debugger
-          clearInterval(self.gameTimer);
-          // self.board.generateGrid();
-          // self.snake.initVerticalSnake();
-          self.startGame();
+          self.restartGame();
         });
       } else if (this.snake.move(nextCell) === CELL_TYPE.FOOD) {
         this.score += 1;
