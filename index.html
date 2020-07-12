@@ -6,10 +6,18 @@
   <title>snake</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="modal.css" />
 </head>
 <body>
   <h1>Snake</h1>
   <div id="game-grid"></div>
+
+  <div id="modal">
+    <div class="modal-content">
+      <p id="message"></p>
+      <button id="close" class="close">Play again</button>
+    </div>
+  </div>
 
   <script src="utilities.js"></script>
   <script src="cell.js"></script>

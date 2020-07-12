@@ -34,7 +34,7 @@ class Game {
     new ListenForInput(this);
 
     const self = this;
-    setInterval(function () {
+    this.gameTimer = setInterval(function () {
       self.update();
       self.board.render();
     }, 100)
@@ -47,7 +47,14 @@ class Game {
 
       if (this.snake.checkCrash(nextCell)) {
         this.gameOver = true;
-        Utilities.showMessage(`Game Over! You scored is ${this.score} points!`);
+        const self = this;
+        Utilities.showMessage(`Game Over! You scored is ${this.score} points!`, function () {
+          // debugger
+          clearInterval(self.gameTimer);
+          // self.board.generateGrid();
+          // self.snake.initVerticalSnake();
+          self.startGame();
+        });
       } else if (this.snake.move(nextCell) === CELL_TYPE.FOOD) {
         this.score += 1;
         this.snake.grow();
