@@ -8,18 +8,14 @@ class Board {
     this.columnsNumber = columnsNumber;
 
     this.generateGrid();
-
-    // render test cells
-    // this.cells[0][0].cellType = CELL_TYPE.SNAKE;
-    // this.cells[19][19].cellType = CELL_TYPE.FOOD;
   }
 
-  getRowsNumber() {
-    // TODO use setter
+  get getRowsCount() {
+    return this.rowsNumber;
   }
 
-  getColumnsNumber() {
-    // TODO use setter
+  get getColumnsCount() {
+    return this.columnsNumber;
   }
 
   generateGrid() {
@@ -27,9 +23,16 @@ class Board {
 
     this.initCells();
 
+    const self = this;
+    this.browseAllCells(function (rowIndex, columnIndex) {
+      self.generateEmptyCell(rowIndex, columnIndex);
+    });
+  }
+
+  browseAllCells(fn) {
     for (let rowIndex = 0; rowIndex < this.rowsNumber; rowIndex++) {
       for (let columnIndex = 0; columnIndex < this.columnsNumber; columnIndex++) {
-        this.generateEmptyCell(rowIndex, columnIndex);
+        fn(rowIndex, columnIndex);
       }
     }
   }
@@ -55,36 +58,34 @@ class Board {
   }
 
   availableCells() {
+    const self = this;
     const availableCells = [];
 
-    // TODO add browseAllCells(fn) function
-    for (let rowIndex = 0; rowIndex < this.rowsNumber; rowIndex++) {
-      for (let columnIndex = 0; columnIndex < this.columnsNumber; columnIndex++) {
-        if (this.cells[rowIndex][columnIndex].cellType === CELL_TYPE.EMPTY) {
-          availableCells.push(this.cells[rowIndex][columnIndex]);
-        }
+    this.browseAllCells(function (rowIndex, columnIndex) {
+      if (self.cells[rowIndex][columnIndex].cellType === CELL_TYPE.EMPTY) {
+        availableCells.push(self.cells[rowIndex][columnIndex]);
       }
-    }
+    });
     return availableCells;
   }
 
   render() {
-    for (let rowIndex = 0; rowIndex < this.rowsNumber; rowIndex++) {
-      for (let columnIndex = 0; columnIndex < this.columnsNumber; columnIndex++) {
-        const { cellType } = this.cells[rowIndex][columnIndex];
-        const cellElement = Utilities.domElement(`c_${rowIndex}_${columnIndex}`);
+    const self = this;
 
-        if (cellType === CELL_TYPE.EMPTY) {
-          cellElement.classList.remove(SNAKE_CLASS);
-          cellElement.classList.remove(FOOD_CLASS);
-        } else if (cellType === CELL_TYPE.SNAKE) {
-          cellElement.classList.add(SNAKE_CLASS);
-          cellElement.classList.remove(FOOD_CLASS);
-        } else if (cellType === CELL_TYPE.FOOD) {
-          cellElement.classList.add(FOOD_CLASS);
-          cellElement.classList.remove(SNAKE_CLASS);
-        }
+    this.browseAllCells(function (rowIndex, columnIndex) {
+      const { cellType } = self.cells[rowIndex][columnIndex];
+      const cellElement = Utilities.domElement(`c_${rowIndex}_${columnIndex}`);
+
+      if (cellType === CELL_TYPE.EMPTY) {
+        cellElement.classList.remove(SNAKE_CLASS);
+        cellElement.classList.remove(FOOD_CLASS);
+      } else if (cellType === CELL_TYPE.SNAKE) {
+        cellElement.classList.add(SNAKE_CLASS);
+        cellElement.classList.remove(FOOD_CLASS);
+      } else if (cellType === CELL_TYPE.FOOD) {
+        cellElement.classList.add(FOOD_CLASS);
+        cellElement.classList.remove(SNAKE_CLASS);
       }
-    }
+    });
   }
 }

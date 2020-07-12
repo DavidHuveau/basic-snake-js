@@ -3,7 +3,7 @@ class Snake {
     this.headCell = headCell;
     this.startingLength = startingLength;
     this.board = board;
-    this.isGrow = false;
+    this.isGrowing = false;
 
     this.initVerticalSnake();
   }
@@ -21,20 +21,19 @@ class Snake {
     }
   }
 
-  getHead() {
-    // TODO use setter
+  get getHeadCell() {
     return this.headCell;
   }
 
   grow() {
-    this.isGrow = true;
+    this.isGrowing = true;
   }
 
   move(nextCell) {
     const initilaCellType = nextCell.cellType;
 
-    if (this.isGrow) {
-      this.isGrow = false;
+    if (this.isGrowing) {
+      this.isGrowing = false;
     } else {
       this.removeTail();
     }

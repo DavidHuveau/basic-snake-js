@@ -26,7 +26,8 @@ class ListenForInput {
 			this.firstTime = false;
 		} else if (!this.game.exceededMaxDirections()) {
 			const { keyCode } = event;
-			
+
+			// Prevent the player from building up a queue of redundant directions
 			if (keyCode == LEFT_ARROW && this.movingVertically()) {
 				this.game.addDirection(DIRECTION.LEFT);
 			}
@@ -42,7 +43,6 @@ class ListenForInput {
 		}
 	}
 
-	// Prevent the player from building up a queue of redundant directions
 	movingVertically() {
 		return [DIRECTION.UP, DIRECTION.DOWN].includes(this.game.currentDirection);
 	};

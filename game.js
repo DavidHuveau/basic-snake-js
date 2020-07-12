@@ -23,7 +23,6 @@ class Game {
   }
 
   startGame() {
-    //TODO: move in listenForInpupt ?
     this.directionsQueue = []
     this.currentDirection = DIRECTION.NONE;
     this.gameOver = false;
@@ -58,7 +57,7 @@ class Game {
   }
 
   getNextCell() {
-    const snakeHead = this.snake.getHead();
+    const snakeHead = this.snake.getHeadCell;
     let { row, column } = snakeHead;
 
     this.currentDirection = this.getFirstDirection();
@@ -77,7 +76,7 @@ class Game {
     }
 
     let nextCell;
-    if (row > -1 && row < this.board.rowsNumber && column > -1 && column < this.board.columnsNumber) {
+    if (row > -1 && row < this.board.getRowsCount && column > -1 && column < this.board.getColumnsCount) {
       nextCell = this.board.cells[row][column];
     }
     this.directionsQueue.shift();
