@@ -24,7 +24,7 @@ class Board {
     this.initCells();
 
     const self = this;
-    this.browseAllCells(function (rowIndex, columnIndex) {
+    this.browseAllCells((rowIndex, columnIndex) => {
       self.generateEmptyCell(rowIndex, columnIndex);
     });
   }
@@ -61,7 +61,7 @@ class Board {
     const self = this;
     const availableCells = [];
 
-    this.browseAllCells(function (rowIndex, columnIndex) {
+    this.browseAllCells((rowIndex, columnIndex) => {
       if (self.cells[rowIndex][columnIndex].cellType === CELL_TYPE.EMPTY) {
         availableCells.push(self.cells[rowIndex][columnIndex]);
       }
@@ -72,7 +72,7 @@ class Board {
   render() {
     const self = this;
 
-    this.browseAllCells(function (rowIndex, columnIndex) {
+    this.browseAllCells((rowIndex, columnIndex) => {
       const { cellType } = self.cells[rowIndex][columnIndex];
       const cellElement = Utilities.domElement(`c_${rowIndex}_${columnIndex}`);
 

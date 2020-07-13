@@ -12,12 +12,12 @@ class Utilities {
   }
 
   static hide(classOrId) {
-    const element = Utilities.domElement(classOrId)
+    const element = Utilities.domElement(classOrId);
     element.style.display = "none";
   }
 
   static show(classOrId) {
-    const element = Utilities.domElement(classOrId)
+    const element = Utilities.domElement(classOrId);
     element.style.display = "block";
   }
 
@@ -34,7 +34,7 @@ class Utilities {
       buttonClose.onclick = function (e) {
         Utilities.hide(MODAL_ID);
         callBack(e);
-      }
+      };
 
       Utilities.show(MODAL_ID);
     }, 100);
