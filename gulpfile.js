@@ -2,6 +2,7 @@ const gulp = require("gulp");
 const concat = require("gulp-concat");
 const minify = require("gulp-minify");
 const cleanCss = require("gulp-clean-css");
+const del = require('del');
 
 const JS_SOURCES_FOLDER = "assets/scripts";
 const JS_BUILD_FOLDER = "public/build/scripts";
@@ -33,3 +34,19 @@ gulp.task("pack-css", function () {
       .pipe(cleanCss())
       .pipe(gulp.dest(CSS_BUILD_FOLDER));
 });
+
+gulp.task("clean-js", function() {
+  return del([JS_BUILD_FOLDER + "/*.js"]);
+});
+
+gulp.task("clean-css", function () {
+  return del([CSS_BUILD_FOLDER + "/*.css"]);
+});
+
+gulp.task(
+  "default",
+  gulp.series(
+    gulp.parallel("clean-js", "clean-css"),
+    gulp.parallel("pack-js", "pack-css")
+  )
+);
