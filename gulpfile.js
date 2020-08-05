@@ -43,13 +43,13 @@ gulp.task("clean-css", function () {
   return del([CSS_BUILD_FOLDER + "/*.css"]);
 });
 
-// gulp.task(
-//   "default",
-//   gulp.series(
-//     gulp.parallel("clean-js", "clean-css"),
-//     gulp.parallel("pack-js", "pack-css")
-//   )
-// );
+gulp.task(
+  "build",
+  gulp.series(
+    gulp.parallel("clean-js", "clean-css"),
+    gulp.parallel("pack-js", "pack-css")
+  )
+);
 
 gulp.task("watch", function () {
   gulp.watch(JS_SOURCES_FOLDER + "/**/*.js", gulp.series("clean-js", "pack-js"));
